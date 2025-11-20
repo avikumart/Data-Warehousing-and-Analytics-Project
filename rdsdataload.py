@@ -9,12 +9,12 @@ import os
 DB_TYPE = 'mysql'  # Options: 'postgresql', 'mysql', 'mssql'
 DB_USER = 'avikumart'
 DB_PASSWORD = 'Avit1699@#'
-DB_HOST = 'database-1.cluster-cnqscyas2poo.us-east-2.rds.amazonaws.com'
+DB_HOST = 'database-1.cnqscyas2poo.us-east-2.rds.amazonaws.com'
 DB_PORT = '3306' # 5432 for Postgres, 3306 for MySQL
-DB_NAME = 'your_database_name'
+DB_NAME = 'database-1'
 
-FILE_PATH = 'data.csv'   # Path to your local data file
-TABLE_NAME = 'target_table_name'
+FILE_PATH = 'data/health_lifestyle_dataset.csv'   # Path to your local data file
+TABLE_NAME = 'life_style_data'  # Target table name in RDS
 
 def get_connection_string():
     """Constructs the connection string based on DB_TYPE."""
