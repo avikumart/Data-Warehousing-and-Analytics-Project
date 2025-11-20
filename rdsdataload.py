@@ -7,8 +7,8 @@ import os
 # ---------------------------------------------------------
 # Ideally, load these from environment variables for security
 DB_TYPE = 'mysql'  # Options: 'postgresql', 'mysql', 'mssql'
-DB_USER = 'avikumart'
-DB_PASSWORD = 'Avit1699@#'
+DB_USER = 'admin'
+DB_PASSWORD = 'Avit1699'
 DB_HOST = 'database-1.cnqscyas2poo.us-east-2.rds.amazonaws.com'
 DB_PORT = '3306' # 5432 for Postgres, 3306 for MySQL
 DB_NAME = 'database-1'
