@@ -1,54 +1,51 @@
 import pandas as pd
-from sqlalchemy import create_engine
-import os
+from sqlalchemy import create_engine, text
+import urllib.parse
 
 # ---------------------------------------------------------
 # CONFIGURATION
 # ---------------------------------------------------------
-# Ideally, load these from environment variables for security
-DB_TYPE = 'mysql'  # Options: 'postgresql', 'mysql', 'mssql'
-DB_USER = 'admin'
-DB_PASSWORD = 'Avit1699'
+DB_USER = 'admin'  # Or whatever your username is
+DB_PASSWORD = 'buNIb:n6[Hw)B[$3K0#k)Q9GJtt>'
 DB_HOST = 'database-1.cnqscyas2poo.us-east-2.rds.amazonaws.com'
-DB_PORT = '3306' # 5432 for Postgres, 3306 for MySQL
-DB_NAME = 'database-1'
+DB_PORT = '3306'
+NEW_DB_NAME = 'health_lifestyle_db'  # We will create this specific DB
+FILE_PATH = 'data/health_lifestyle_dataset.csv'
 
-FILE_PATH = 'data/health_lifestyle_dataset.csv'   # Path to your local data file
-TABLE_NAME = 'life_style_data'  # Target table name in RDS
-
-def get_connection_string():
-    """Constructs the connection string based on DB_TYPE."""
-    if DB_TYPE == 'postgresql':
-        # Uses psycopg2 driver
-        return f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-    elif DB_TYPE == 'mysql':
-        # Uses pymysql driver
-        return f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-    else:
-        raise ValueError("Unsupported DB_TYPE specified.")
+def create_database_if_not_exists():
+    """
+    Connects to the MySQL server (sys database) to create the new database.
+    """
+    encoded_password = urllib.parse.quote_plus(DB_PASSWORD)
+    
+    # Connect to the 'mysql' system database just to run the CREATE command
+    # We use 'mysql' or empty database to establish the initial connection
+    server_connection_str = f"mysql+pymysql://{DB_USER}:{encoded_password}@{DB_HOST}:{DB_PORT}/mysql"
+    
+    engine = create_engine(server_connection_str)
+    
+    with engine.connect() as conn:
+        # We must use commit() because CREATE DATABASE cannot run inside a transaction block in some drivers
+        conn.execute(text("COMMIT")) 
+        conn.execute(text(f"CREATE DATABASE IF NOT EXISTS {NEW_DB_NAME}"))
+        print(f"✅ Database '{NEW_DB_NAME}' exists or was created successfully.")
 
 def load_data_to_rds():
     try:
-        print("--- Starting Data Load Process ---")
-        
-        # 1. Create the SQLAlchemy Engine
-        connection_str = get_connection_string()
-        engine = create_engine(connection_str)
-        
-        # 2. Load Data from CSV into Pandas DataFrame
-        # Note: If your file is Excel, use pd.read_excel(FILE_PATH)
+        # 1. Ensure the database exists
+        create_database_if_not_exists()
+
+        # 2. Connect to the NEW database
+        encoded_password = urllib.parse.quote_plus(DB_PASSWORD)
+        db_connection_str = f"mysql+pymysql://{DB_USER}:{encoded_password}@{DB_HOST}:{DB_PORT}/{NEW_DB_NAME}"
+        engine = create_engine(db_connection_str)
+
+        # 3. Load and Upload Data
         print(f"Reading data from {FILE_PATH}...")
         df = pd.read_csv(FILE_PATH)
         
-        # Optional: Clean data here if necessary
-        # df.dropna(inplace=True)
-        
-        # 3. Upload Data to RDS
-        print(f"Uploading {len(df)} rows to table '{TABLE_NAME}'...")
-        
-        # if_exists options: 'fail', 'replace', 'append'
-        # index=False prevents pandas from creating an extra column for the index
-        df.to_sql(TABLE_NAME, con=engine, if_exists='append', index=False)
+        print(f"Uploading {len(df)} rows to table 'life_style_data' in DB '{NEW_DB_NAME}'...")
+        df.to_sql('life_style_data', con=engine, if_exists='replace', index=False)
         
         print("✅ Data loaded successfully!")
 
