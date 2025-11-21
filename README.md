@@ -1,17 +1,17 @@
 # Healthcare Analytics: Disease Risk Prediction
 
 ## Project Overview
-This project is part of the **INFO 531: Data Warehousing and Analytics in the Cloud** course (Fall 2025). It focuses on healthcare analytics, specifically aiming to predict disease risks based on lifestyle and health metrics. [cite_start]By analyzing factors such as physical activity, diet, and physiological markers, the project seeks to identify key drivers of disease and healthy lifestyles[cite: 1].
+This project is part of the **INFO 531: Data Warehousing and Analytics in the Cloud** course (Fall 2025). It focuses on healthcare analytics, specifically aiming to predict disease risks based on lifestyle and health metrics. By analyzing factors such as physical activity, diet, and physiological markers, the project seeks to identify key drivers of disease and healthy lifestyles[cite: 1].
 
 ## Dataset
-[cite_start]The analysis utilizes a dataset of **100,000 records** containing **16 health and lifestyle-related features**[cite: 1].
-* [cite_start]**Source:** Kaggle [cite: 1]
+The analysis utilizes a dataset of **100,000 records** containing **16 health and lifestyle-related features**[cite: 1].
+* **Source:** Kaggle 
 * **Target Variable:** `disease_risk` (Binary)
     * `0`: Low Risk
-    * [cite_start]`1`: High Risk [cite: 1]
+    * `1`: High Risk
 
 ### Key Features
-[cite_start]The dataset includes 14 predictor variables across several categories[cite: 1]:
+The dataset includes 14 predictor variables across several categories:
 * **Demographic:** Age, Gender (Encoded)
 * **Anthropometric:** BMI
 * **Physical Activity:** Daily Steps
@@ -21,8 +21,12 @@ This project is part of the **INFO 531: Data Warehousing and Analytics in the Cl
 * **Biomarker:** Cholesterol Level
 * **Medical History:** Family History
 
+## System Design
+
+![sysdesign](assets/Gemini_Generated_Image_l3h9mul3h9mul3h9.png)
+
 ## Data Preparation Plan
-[cite_start]To ensure high-quality input for machine learning models, the following preparation steps are implemented[cite: 1]:
+To ensure high-quality input for machine learning models, the following preparation steps are implemented[cite: 1]:
 
 1.  **Data Cleaning:**
     * Scan for and remove duplicate entries.
@@ -40,11 +44,11 @@ This project is part of the **INFO 531: Data Warehousing and Analytics in the Cl
 ## Methodology
 
 ### Data Partitioning
-* [cite_start]**Split Ratio:** 80% Training / 20% Testing[cite: 1].
-* [cite_start]**Validation:** k-fold cross-validation ($k=5$) is applied to the training set for hyperparameter tuning[cite: 1].
+* **Split Ratio:** 80% Training / 20% Testing[cite: 1].
+* **Validation:** k-fold cross-validation ($k=5$) is applied to the training set for hyperparameter tuning[cite: 1].
 
 ### Machine Learning Models
-[cite_start]The project employs a two-pronged modeling approach[cite: 1]:
+The project employs a two-pronged modeling approach[cite: 1]:
 
 1.  **Baseline Model: Logistic Regression (LR)**
     * Chosen for its interpretability and ability to provide clear coefficients for risk factors.
@@ -53,7 +57,7 @@ This project is part of the **INFO 531: Data Warehousing and Analytics in the Cl
 3.  **Additional Models:** Support Vector Machines (SVMs) and XGBoost may be explored for robust accuracy.
 
 ## Evaluation Metrics
-[cite_start]Given the class imbalance, the project prioritizes metrics beyond standard accuracy[cite: 1]:
+Given the class imbalance, the project prioritizes metrics beyond standard accuracy[cite: 1]:
 * **F1-Score:** To balance precision and recall.
 * **ROC-AUC:** To measure discrimination ability across thresholds.
 * **Recall (Sensitivity):** To minimize false negatives (missing high-risk patients), which is critical in a clinical setting.
