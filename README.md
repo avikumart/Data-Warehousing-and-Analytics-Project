@@ -62,6 +62,16 @@ Given the class imbalance, the project prioritizes metrics beyond standard accur
 * **ROC-AUC:** To measure discrimination ability across thresholds.
 * **Recall (Sensitivity):** To minimize false negatives (missing high-risk patients), which is critical in a clinical setting.
 
+## Results:
+
+| Model | Accuracy | Recall | F1 Score | ROC AUC |
+| :--- | :--- | :--- | :--- | :--- |
+| **Logistic Regression** | 0.49980 | 0.503828 | 0.333333 | 0.503064 |
+| **Random Forest** | 0.71055 | 0.065673 | 0.101227 | 0.495568 |
+| **XGBoost** | 0.74365 | 0.017123 | 0.032094 | 0.494139 |
+| **SVC** | 0.50435 | 0.479654 | 0.324497 | 0.490195 |
+
+
 ## Requirements
 * **Language:** Python
 * **Libraries:**
