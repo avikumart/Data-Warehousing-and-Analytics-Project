@@ -1,7 +1,7 @@
 # Healthcare Analytics: Disease Risk Prediction
 
 ## Project Overview
-This project is part of the **INFO 531: Data Warehousing and Analytics in the Cloud** course (Fall 2025). It focuses on healthcare analytics, specifically aiming to predict disease risks based on lifestyle and health metrics. By analyzing factors such as physical activity, diet, and physiological markers, the project seeks to identify key drivers of disease and healthy lifestyles[cite: 1].
+This project is part of the **INFO 531: Data Warehousing and Analytics in the Cloud** course (Fall 2025). It focuses on healthcare analytics, specifically aiming to predict disease risks based on lifestyle and health metrics. By analyzing factors such as physical activity, diet, and physiological markers, the project seeks to identify key drivers of disease and healthy lifestyles.
 
 ## Dataset
 The analysis utilizes a dataset of **100,000 records** containing **16 health and lifestyle-related features**[cite: 1].
