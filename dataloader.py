@@ -41,7 +41,7 @@ def split_data(df: pd.DataFrame, target: str, test_size: float = 0.2, random_sta
 
 if __name__ == '__main__':
     # Example usage for testing
-    DATA_FILE = '../data/health_lifestyle_dataset.csv' # Adjust path as needed
+    DATA_FILE = '/Users/avikumart/Documents/GitHub/Data-Warehousing-and-Analytics-Project/data/health_lifestyle_dataset.csv' # Adjust path as needed
     TARGET_COLUMN = 'disease_risk'
     
     df = load_data(DATA_FILE)
