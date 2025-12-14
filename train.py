@@ -3,10 +3,11 @@ import numpy as np
 import mlflow
 import mlflow.sklearn
 from sklearn.model_selection import StratifiedKFold
-from model_pipeline import (
+from sklearn.model_selection import cross_val_score
+from mlpipeline import (
     create_preprocessor, get_models, create_pipeline, get_metrics, get_feature_importances, CONTINUOUS_FEATURES
 )
-from data_loader import load_data, split_data
+from dataloader import load_data, split_data
 
 # --- Configuration ---
 DATA_FILE = 'data/health_lifestyle_dataset.csv' # Assuming 'data' is a sibling directory
