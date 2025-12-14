@@ -128,19 +128,19 @@ if __name__ == '__main__':
             if df.empty:
                 raise RuntimeError("Data loading failed.")
             
-        # 2. Split Data
+            # 2. Split Data
             X_train, X_test, y_train, y_test = split_data(df, TARGET_COLUMN)
         
-        # 3. Create Preprocessor
+            # 3. Create Preprocessor
             preprocessor = create_preprocessor()
         
-        # 4. Train and Evaluate only the selected model (or all if None)
+            # 4. Train and Evaluate only the selected model (or all if None)
             all_results = train_and_evaluate_models(
             X_train, X_test, y_train, y_test, preprocessor, selected_model_name=MODEL_TO_RUN
         )
 
-        # 5. Final Comparison (Logged in a final, separate run for overview)
-        # This summary run will only include results from the model(s) that were trained.
+            # 5. Final Comparison (Logged in a final, separate run for overview)
+            # This summary run will only include results from the model(s) that were trained.
             if all_results:
                 with mlflow.start_run(run_name="Comparison_Summary", nested=True):
                     compare_results(all_results)
