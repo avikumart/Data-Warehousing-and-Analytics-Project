@@ -126,3 +126,4 @@ websocket-client
 wheel==0.45.1
 widgetsnbextension
 xgboost==3.1.1
+mlflow
