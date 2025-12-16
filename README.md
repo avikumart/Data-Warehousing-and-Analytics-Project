@@ -1,7 +1,7 @@
 # Healthcare Analytics: Disease Risk Prediction
 
 ## Project Overview
-This project is part of the **INFO 531: Data Warehousing and Analytics in the Cloud** course (Fall 2025). It focuses on healthcare analytics, specifically aiming to predict disease risks based on lifestyle and health metrics. By analyzing factors such as physical activity, diet, and physiological markers, the project seeks to identify key drivers of disease and healthy lifestyles[cite: 1].
+This project is part of the **INFO 531: Data Warehousing and Analytics in the Cloud** course (Fall 2025). It focuses on healthcare analytics, specifically aiming to predict disease risks based on lifestyle and health metrics. By analyzing factors such as physical activity, diet, and physiological markers, the project seeks to identify key drivers of disease and healthy lifestyles.
 
 ## Dataset
 The analysis utilizes a dataset of **100,000 records** containing **16 health and lifestyle-related features**[cite: 1].
@@ -32,7 +32,7 @@ The dataset includes 14 predictor variables across several categories:
 ![image2](assets/ss2.png)
 
 ## Data Preparation Plan
-To ensure high-quality input for machine learning models, the following preparation steps are implemented[cite: 1]:
+To ensure high-quality input for machine learning models, the following preparation steps are implemented:
 
 1.  **Data Cleaning:**
     * Scan for and remove duplicate entries.
@@ -50,11 +50,11 @@ To ensure high-quality input for machine learning models, the following preparat
 ## Methodology
 
 ### Data Partitioning
-* **Split Ratio:** 80% Training / 20% Testing[cite: 1].
-* **Validation:** k-fold cross-validation ($k=5$) is applied to the training set for hyperparameter tuning[cite: 1].
+* **Split Ratio:** 80% Training / 20% Testing.
+* **Validation:** k-fold cross-validation ($k=5$) is applied to the training set for hyperparameter tuning.
 
 ### Machine Learning Models
-The project employs a two-pronged modeling approach[cite: 1]:
+The project employs a two-pronged modeling approach:
 
 1.  **Baseline Model: Logistic Regression (LR)**
     * Chosen for its interpretability and ability to provide clear coefficients for risk factors.
@@ -63,7 +63,7 @@ The project employs a two-pronged modeling approach[cite: 1]:
 3.  **Additional Models:** Support Vector Machines (SVMs) and XGBoost may be explored for robust accuracy.
 
 ## Evaluation Metrics
-Given the class imbalance, the project prioritizes metrics beyond standard accuracy[cite: 1]:
+Given the class imbalance, the project prioritizes metrics beyond standard accuracy:
 * **F1-Score:** To balance precision and recall.
 * **ROC-AUC:** To measure discrimination ability across thresholds.
 * **Recall (Sensitivity):** To minimize false negatives (missing high-risk patients), which is critical in a clinical setting.
