@@ -1,0 +1,22 @@
+artifact_path: /Users/avikumart/Documents/GitHub/Data-Warehousing-and-Analytics-Project/mlruns/1/models/m-3e191b86b3b74c17bd4ac66aedefda4d/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.5
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+mlflow_version: 3.7.0
+model_id: m-3e191b86b3b74c17bd4ac66aedefda4d
+model_size_bytes: 2648878
+model_uuid: m-3e191b86b3b74c17bd4ac66aedefda4d
+prompts: null
+run_id: fe0c1efcc6944982bf169cc04c23cf20
+utc_time_created: '2025-12-16 00:14:37.693823'
