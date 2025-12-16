@@ -10,7 +10,7 @@ from pathlib import Path
 MLFLOW_EXPERIMENT_NAME = "Disease_Risk_Classification_SMOTE"
 TARGET_MODEL_NAME = "Logistic Regression" 
 # The model artifact is stored inside a 'model' directory in the MLflow run folder.
-ARTIFACT_PATH = "model" 
+ARTIFACT_PATH = "models" 
 MODEL_FILENAME = "model.pkl" # Common filename for joblib-saved models in MLflow
 
 # Define the features that require user input, based on your notebook's setup
@@ -21,50 +21,12 @@ INPUT_FEATURES = [
     'cholesterol', 'family_history', 'smoker', 'alcohol', 'gender'
 ]
 
-# --- PKL/Joblib Model Loading from File ---
-
-def find_latest_model_path(experiment_name: str, model_run_name: str) -> str | None:
-    """
-    Searches the local 'mlruns' folder to find the file path of the latest 
-    saved model artifact (model.pkl/joblib) for a specific experiment and run name.
-    """
-    # 1. Get the local MLflow tracking path
-    base_path = Path("mlruns")
-    
-    # 2. Find the experiment directory
-    # MLflow usually names experiment directories by ID, but we need to find the ID first
-    # This requires MLflow to be set up, but we'll try to guess based on standard structure
-    # A more direct way is to search by the run name tag, but that is complex without MLflow SDK
-    
-    # Simple direct search (less robust, but avoids MLflow SDK calls)
-    # Pattern: mlruns/<experiment_id>/<run_id>/artifacts/model/model.pkl
-    # We will search for all 'model.pkl' files and find the latest one from the correct run
-    
-    # NOTE: This search pattern assumes the training script uses `mlflow.sklearn.log_model`, 
-    # which internally saves a 'model.pkl' file if the model is a scikit-learn object.
-    search_pattern = str(base_path / "*" / "*" / "artifacts" / ARTIFACT_PATH / MODEL_FILENAME)
-    all_model_files = glob.glob(search_pattern)
-
-    # Filter by model run name (requires inspecting the run's metadata file, which is complex)
-    # A simplified, less accurate approach: find the latest file by modification time
-    
-    if not all_model_files:
-        st.error("No model files found in the mlruns directory. Did the training script run successfully?")
-        return None
-
-    # Get the latest file by modification time (heuristic)
-    latest_file = max(all_model_files, key=os.path.getmtime)
-    
-    st.sidebar.markdown(f"**Heuristic Load Path:** `{latest_file}`")
-    return latest_file
-
-
 @st.cache_resource
 def load_model_from_file():
     """
     Loads the model using joblib from the file path found.
     """
-    model_path = find_latest_model_path(MLFLOW_EXPERIMENT_NAME, TARGET_MODEL_NAME)
+    model_path = "mlruns/1/models/m-3e191b86b3b74c17bd4ac66aedefda4d/artifacts/model.pkl"
     
     if model_path:
         try:
@@ -167,10 +129,12 @@ def main():
                 st.error(f"🔴 High Disease Risk Predicted (Probability: {probability:.2f})")
                 st.markdown("The model suggests this patient is at **high risk** of disease. Further clinical evaluation is recommended.")
                 # Trigger image of common risk factors
-                st.image("https://www.cdc.gov/chronicdisease/images/infographics/risk-factors-infographic-800px.jpg", caption="Common Risk Factors", use_column_width=True)
+                st.image("assets/highrisk.png", caption="Common Risk Factors")
             else:
                 st.success(f"🟢 Low Disease Risk Predicted (Probability: {1-probability:.2f})")
                 st.markdown("The model suggests this patient is at **low risk**. Continue monitoring health metrics.")
+                # Trigger image of healthy lifestyle
+                st.image("assets/lowrisk.png", caption="Healthy Lifestyle")
 
             # Optional: Show input data for verification
             with st.expander("Show Raw Input Data"):

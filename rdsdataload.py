@@ -6,7 +6,7 @@ import urllib.parse
 # CONFIGURATION
 # ---------------------------------------------------------
 DB_USER = 'admin'  # Or whatever your username is
-DB_PASSWORD = 'buNIb:n6[Hw)B[$3K0#k)Q9GJtt>'
+DB_PASSWORD = 'buNIb***************************' # add your password here
 DB_HOST = 'database-1.cnqscyas2poo.us-east-2.rds.amazonaws.com'
 DB_PORT = '3306'
 NEW_DB_NAME = 'health_lifestyle_db'  # We will create this specific DB
