@@ -1,0 +1,2 @@
+                     Accuracy    Recall  F1 Score   ROC AUC
+Logistic Regression   0.50145  0.505641  0.334868  0.502763

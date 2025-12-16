@@ -3,10 +3,11 @@ import numpy as np
 import mlflow
 import mlflow.sklearn
 from sklearn.model_selection import StratifiedKFold
-from model_pipeline import (
+from sklearn.model_selection import cross_val_score
+from mlpipeline import (
     create_preprocessor, get_models, create_pipeline, get_metrics, get_feature_importances, CONTINUOUS_FEATURES
 )
-from data_loader import load_data, split_data
+from dataloader import load_data, split_data
 
 # --- Configuration ---
 DATA_FILE = 'data/health_lifestyle_dataset.csv' # Assuming 'data' is a sibling directory
@@ -48,7 +49,7 @@ def train_and_evaluate_models(
     mlflow.log_param("categorical_encoding", "OneHotEncoder")
     
     for name, model in models_to_train.items():
-        with mlflow.start_run(run_name=name) as run:
+        with mlflow.start_run(run_name=name, nested=True) as run:
             print(f"\n--- {name} ---")
             
             # 1. Setup Pipeline with Preprocessor and SMOTE
@@ -120,30 +121,33 @@ if __name__ == '__main__':
     MODEL_TO_RUN = "Logistic Regression" 
     # MODEL_TO_RUN = None # To run all models (default)
     
-    try:
-        # 1. Load Data
-        df = load_data(DATA_FILE)
-        if df.empty:
-            raise RuntimeError("Data loading failed.")
+    with mlflow.start_run(run_name="Overall_Training_Run") as main_run:
+        try:
+            # 1. Load Data
+            df = load_data(DATA_FILE)
+            if df.empty:
+                raise RuntimeError("Data loading failed.")
             
-        # 2. Split Data
-        X_train, X_test, y_train, y_test = split_data(df, TARGET_COLUMN)
+            # 2. Split Data
+            X_train, X_test, y_train, y_test = split_data(df, TARGET_COLUMN)
         
-        # 3. Create Preprocessor
-        preprocessor = create_preprocessor()
+            # 3. Create Preprocessor
+            preprocessor = create_preprocessor()
         
-        # 4. Train and Evaluate only the selected model (or all if None)
-        all_results = train_and_evaluate_models(
+            # 4. Train and Evaluate only the selected model (or all if None)
+            all_results = train_and_evaluate_models(
             X_train, X_test, y_train, y_test, preprocessor, selected_model_name=MODEL_TO_RUN
         )
 
-        # 5. Final Comparison (Logged in a final, separate run for overview)
-        # This summary run will only include results from the model(s) that were trained.
-        if all_results:
-            with mlflow.start_run(run_name="Comparison_Summary", nested=True):
-                 compare_results(all_results)
-        else:
-            print("No models were successfully trained or evaluated.")
+            # 5. Final Comparison (Logged in a final, separate run for overview)
+            # This summary run will only include results from the model(s) that were trained.
+            if all_results:
+                with mlflow.start_run(run_name="Comparison_Summary", nested=True):
+                    compare_results(all_results)
+            else:
+                print("No models were successfully trained or evaluated.")
              
-    except Exception as e:
-        print(f"An error occurred: {e}")
+        except Exception as e:
+            mlflow.log_param("status", "Failed")
+            mlflow.log_param("error_message", str(e))
+            print(f"An error occurred: {e}")
