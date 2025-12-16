@@ -25,6 +25,12 @@ The dataset includes 14 predictor variables across several categories:
 
 ![sysdesign](assets/Gemini_Generated_Image_l3h9mul3h9mul3h9.png)
 
+## Demo Development Images:
+
+![image1](assets/ss1.png)
+
+![image2](assets/ss2.png)
+
 ## Data Preparation Plan
 To ensure high-quality input for machine learning models, the following preparation steps are implemented[cite: 1]:
 
