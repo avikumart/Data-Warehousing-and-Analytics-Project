@@ -6,7 +6,7 @@ This project is part of the **INFO 531: Data Warehousing and Analytics in the Cl
 ## Dataset
 The analysis utilizes a dataset of **100,000 records** containing **16 health and lifestyle-related features**[cite: 1].
 * **Source:** Kaggle 
-* **Target Variable:** `disease_risk` (Binary)
+* **Target Variable:** `disease_risk` (Binary Variable)
     * `0`: Low Risk
     * `1`: High Risk
 
